@@ -4,7 +4,6 @@ const port = 3000
 import productRoutes from './route/products/index' 
 
 app.use(express.json())
-
 app.use('/products', productRoutes)
 
 const date = new Date()
