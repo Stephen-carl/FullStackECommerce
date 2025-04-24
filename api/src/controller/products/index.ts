@@ -14,7 +14,7 @@ export async function createProducts(req: Request, res: Response) {
     try {
         // write the orm query in a sql-like form
         // so i am going to create and return the just inserted data
-        const [insertedProduct] = await db.insert(productsTable).values(req.body).returning()
+        const [insertedProduct] = await db.insert(productsTable).values(req.cleanBody).returning()
     
         res.status(201).json(insertedProduct)
     } catch (error) {
@@ -68,7 +68,7 @@ export async function updateProducts(req: Request, res: Response) {
     try {
         // get the id from the params, and the details from the body
         const id = req.params.id
-        const updatedFields = req.body
+        const updatedFields = req.cleanBody
 
         // update 
         const [product] = await db.update(productsTable).set(updatedFields).where(eq(productsTable.id, Number(id) )).returning()

@@ -14,11 +14,14 @@
   "type": "module",
   "dependencies": {
     "drizzle-orm": "^0.42.0",
+    "drizzle-zod": "^0.7.1",
     "express": "^5.1.0",
+    "lodash": "^4.17.21",
     "pg": "^8.14.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
+    "@types/lodash": "^4.17.16",
     "@types/node": "^22.14.1",
     "@types/pg": "^8.11.13",
     "drizzle-kit": "^0.31.0",
