@@ -1,8 +1,8 @@
 import express from 'express';
 const app = express()
 const port = 3000
-import productRoutes from './route/products/index' 
-import authRoutes from './route/auth/index'
+import productRoutes from './route/products/index.js' 
+import authRoutes from './route/auth/index.js'
 
 app.use(express.json())
 app.use('/products', productRoutes)

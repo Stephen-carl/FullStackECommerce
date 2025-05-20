@@ -1,8 +1,8 @@
 import {Router} from 'express'
-import { createProducts, deleteProducts, getProducts, getProductsById, listProducts, updateProducts } from 'src/controller/products';
-import { createProductSchema, updateProductSchema } from 'src/db/productsSchema';
-import { verifySeller, verifyToken } from 'src/middleware/authMiddleware';
-import { validationData } from 'src/middleware/validationMiddleware';
+import { createProducts, deleteProducts, getProducts, getProductsById, listProducts, updateProducts } from '../../controller/products/index.js';
+import { createProductSchema, updateProductSchema } from '../../db/productsSchema.js';
+import { verifySeller, verifyToken } from '../../middleware/authMiddleware.js';
+import { validationData } from '../../middleware/validationMiddleware.js';
 
 const router = Router();
 

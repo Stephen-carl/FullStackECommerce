@@ -1,8 +1,8 @@
 
 import { eq } from "drizzle-orm";
 import { Request, Response } from "express";
-import db from "src/db/index";
-import { productsTable } from "src/db/productsSchema";
+import db from "../../db/index.js";
+import { productsTable } from "../../db/productsSchema.js";
 
 // sample code
 export function getProducts(req: Request, res: Response) {
