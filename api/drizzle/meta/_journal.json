@@ -29,6 +29,20 @@
       "when": 1745401466223,
       "tag": "0003_delete_quanity",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1746152155431,
+      "tag": "0004_nasty_apocalypse",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1746154146123,
+      "tag": "0005_adding_unique_to_email",
+      "breakpoints": true
     }
   ]
 }

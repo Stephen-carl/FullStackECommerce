@@ -6,6 +6,7 @@ export function validationData(schema: z.ZodObject<any, any>) {
     return(req: Request, res: Response, next:NextFunction) => {
         try {
             schema.parse(req.body);
+            // take the request body, only pick the keys as in the schema and go to the next function
             req.cleanBody = _.pick(req.body, Object.keys(schema.shape));
             next();
         } catch (error) {

@@ -12,6 +12,8 @@ export function getProducts(req: Request, res: Response) {
 export async function createProducts(req: Request, res: Response) {
 
     try {
+        console.log(req.userId);
+        
         // write the orm query in a sql-like form
         // so i am going to create and return the just inserted data
         const [insertedProduct] = await db.insert(productsTable).values(req.cleanBody).returning()

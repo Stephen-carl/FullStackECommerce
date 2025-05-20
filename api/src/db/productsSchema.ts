@@ -9,6 +9,7 @@ export const productsTable = pgTable('products', {
   price: doublePrecision().notNull(),
 });
 
+// generatedAlwaysAsIdentity - this method helps not to use an omit()
 export const createProductSchema = createInsertSchema(productsTable)
 
 export const updateProductSchema = createInsertSchema(productsTable).partial()
