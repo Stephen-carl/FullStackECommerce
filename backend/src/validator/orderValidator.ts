@@ -16,3 +16,7 @@ export const insertOrderWithItems = z.object({
     order : createOrder,
     items: z.array(createOrderItem)
 })
+
+export const updateOrderItem = z.object({
+    quantity: z.number().min(1)
+})

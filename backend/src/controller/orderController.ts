@@ -124,3 +124,61 @@ export async function getOrder(req: Request, res : Response) {
         res.status(500).json({message : error});
     }
 }
+
+// update orderItem
+export async function updateOrderItem(req : Request, res : Response) {
+    try {
+        const rawId = req.params.id
+        const rawQuantity = req.query.quantity
+        // Convert to numbers
+        const id       = rawId       ? parseInt(rawId as string, 10)       : NaN;
+        const quantity = rawQuantity ? parseInt(rawQuantity as string, 10) : NaN;
+
+        // Validate
+        if (!Number.isInteger(id) || id <= 0) {
+        res.status(400).json({ message: 'Invalid or missing `id` parameter' });
+        return
+        }
+        if (!Number.isInteger(quantity) || quantity < 1) {
+        res.status(400).json({ message: 'Invalid or missing `quantity` parameter' });
+        return
+        }
+        const [updatedOrder] = await db.update(orderItemsTable).set({quantity : quantity}).where(eq(orderItemsTable.oiid, id)).returning()
+        res.status(200).json({ message: 'Order item updated', item: updatedOrder });
+        return
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message : error});
+    }
+}
+
+// delete orderItem
+export async function deleteOrderItem(req : Request, res : Response) {
+    try {
+    const rawId = req.params.id;
+    const id = rawId ? parseInt(rawId, 10) : NaN;
+
+    // Validate
+    if (!Number.isInteger(id) || id <= 0) {
+      res.status(400).json({ message: 'Invalid or missing `id` parameter' });
+      return
+    }
+
+    const [deletedItem] = await db
+      .delete(orderItemsTable)
+      .where(eq(orderItemsTable.oiid, id))
+      .returning();  // Postgres only
+
+    if (!deletedItem) {
+      res.status(404).json({ message: `Order item with id ${id} not found` });
+      return
+    }
+
+    res.status(200).json({ message: 'Order item deleted', item: deletedItem });
+    return
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message : error});
+    }    
+}
