@@ -7,7 +7,7 @@ import { Link } from 'expo-router'
 import { Pressable } from 'react-native'
 
 
-// my flat list component
+// my flat list component like adapter in android
 export default function ProductListItem({ product }){
     return (
         <Link href={`/product/${product.id}`} asChild>

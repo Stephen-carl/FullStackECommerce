@@ -1,6 +1,5 @@
 import { Text } from "@/components/ui/text";
-import { useLocalSearchParams } from "expo-router";
-import products from '../../assets/products.json'
+import { Stack, useLocalSearchParams } from "expo-router";
 import { Card } from '@/components/ui/card'
 import { Image } from '@/components/ui/image'
 import { VStack } from '@/components/ui/vstack'
@@ -8,19 +7,35 @@ import { Heading } from '@/components/ui/heading'
 import { Box } from '@/components/ui/box'
 import { Button } from '@/components/ui/button'
 import { ButtonText } from '@/components/ui/button'
+import { useQuery } from "@tanstack/react-query";
+import { ActivityIndicator } from "react-native";
+import { fetchProductByID } from "@/api/products";
 
 export default function ProductDetails() {
     const {id} = useLocalSearchParams();
     console.log(id);
-    // now to look for the product with that id in the product.json
-    // since the id is going to a number, to avoid typescript from crying i have to cast the id to a type
-    const product = products.find(product => product.id === Number(id));
-    // if product does not exist, display this
-    if (!product) {
-        return <Text>Product not found</Text>
+    
+    // so it is getting the hierachy of the cache by storing the id under the products
+    const { data : product, isLoading, error} = useQuery({
+        queryKey : ['products', id],
+        queryFn : () => fetchProductByID(String(id)),
+    })
+
+    // set what happens when the request is still loading
+    if (isLoading) {
+        return <ActivityIndicator />
     }
+    // then for the error, display a toast
+    if (error) {
+        return <Text>Error fetching the product</Text>
+    }
+
     return (
-        <Card className="p-5 rounded-lg max-w-[360px] flex-1">
+        // i'll add a box to wrap the card
+        <Box className="flex-1 items-center p-1">
+        {/* the max-w-[360px] is to make sure that while it takes the full width, it should not exceed the given max width */}
+        <Stack.Screen options={{ title: product.name}} />
+        <Card className="p-5 rounded-lg max-w-[560px] w-full">
             <Image
                 source={{
                     uri: product.image,
@@ -54,5 +69,6 @@ export default function ProductDetails() {
                 </Button>
             </Box>
         </Card>
+        </Box>
     )
 }
