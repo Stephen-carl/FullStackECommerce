@@ -10,11 +10,16 @@ import { ButtonText } from '@/components/ui/button'
 import { useQuery } from "@tanstack/react-query";
 import { ActivityIndicator } from "react-native";
 import { fetchProductByID } from "@/api/products";
+import { useCart } from "@/store/cartStore";
 
 export default function ProductDetails() {
     const {id} = useLocalSearchParams();
     console.log(id);
     
+    // call the global store to add products to cart
+    // and the state to maintain the state instead of always rerendering
+    const addProduct = useCart((state : any) => state.addProduct)
+
     // so it is getting the hierachy of the cache by storing the id under the products
     const { data : product, isLoading, error} = useQuery({
         queryKey : ['products', id],
@@ -28,6 +33,11 @@ export default function ProductDetails() {
     // then for the error, display a toast
     if (error) {
         return <Text>Error fetching the product</Text>
+    }
+
+    // button onpress and add the product to the product store
+    const addToCart = () => {
+        addProduct(product)
     }
 
     return (
@@ -56,7 +66,8 @@ export default function ProductDetails() {
                 </Text>
             </VStack>
             <Box className="flex-col sm:flex-row">
-                <Button className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
+                {/* add the onpress function in the button */}
+                <Button onPress={addToCart} className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
                 <ButtonText size="sm">Add to cart</ButtonText>
                 </Button>
                 <Button

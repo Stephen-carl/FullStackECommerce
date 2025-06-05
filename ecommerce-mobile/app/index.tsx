@@ -14,6 +14,16 @@ export default function HomeScreen() {
         queryFn : listProducts,
     })
 
+    // all hooks should be called unconditionally above everything
+    const numColumns = useBreakpointValue({
+        // using a default column value
+
+        default : 2,
+        md : 3,
+        xl: 4,
+        sm :3
+    })
+
     // set what happens when the request is still loading
     if (isLoading) {
         return <ActivityIndicator />
@@ -37,14 +47,7 @@ export default function HomeScreen() {
     // },[])
     
     // to make the number of columns responsive on the web i can add some VariableContext
-    const numColumns = useBreakpointValue({
-        // using a default column value
-
-        default : 2,
-        md : 3,
-        xl: 4,
-        sm :3
-    })
+    
     return(
         // {/* so the products i want to display and renderItem is how each item should be displayed. so i have to design how each show look. */}
         <FlatList 
@@ -52,6 +55,8 @@ export default function HomeScreen() {
         // the data here will be empty at first
         // once the data is fetched the setProduct takes effect
         data={data} 
+        // fetching the pid
+        keyExtractor={(item) => item.pid}
         numColumns={numColumns}
         contentContainerClassName="gap-2 max-w-[960px] w-full mx-auto"
         columnWrapperClassName="gap-2"

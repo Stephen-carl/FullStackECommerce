@@ -17,7 +17,7 @@ export async function listProducts() {
 
     const data = await response.json();
     console.log("Fetched data:", data);
-    return data;
+    return data.product;
   } catch (err) {
     console.error("Error fetching products:", err);
     throw err;
@@ -38,7 +38,7 @@ export async function fetchProductByID(id:string) {
         // parse the data to json
         const data = await response.json();
         console.log("Fetched data:", data);
-        return data;
+        return data.product;
     } catch (error) {
         console.log(error);
         throw error;
